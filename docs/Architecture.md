@@ -16,10 +16,10 @@ The architecture is intentionally small but mirrors real operational patterns:
 
 ```mermaid
 flowchart LR
-  subgraph Domain["Windows Domain (Lab)"]
+  subgraph Domain["Windows Domain lab"]
     DC01["DC01\n Windows Server 2022\n AD DS + DNS + GPO"]
     SVR01["SVR01\n Windows Server 2022\n Member Server"]
-    WIN11["WIN11-01\nWindows 11 Endpoint\n Defender (Sysmon optional)"]
+    WIN11["WIN11-01\nWindows 11 Endpoint\n Defender Sysmon optional"]
   end
 
   DC01 -->|GPO Policies| SVR01
