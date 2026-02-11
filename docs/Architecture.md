@@ -156,6 +156,7 @@ Defender availability depends on OS edition and system state.
 Some controls are best enforced via GPO in enterprise; the lab may apply them via PowerShell and document the equivalent GPO baseline.
 
 7. Mapping to Repository Artifacts
+   
 
    | Item              | Description                             | Location                                |
 | ----------------- | --------------------------------------- | --------------------------------------- |
