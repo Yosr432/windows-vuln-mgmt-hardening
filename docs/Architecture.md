@@ -102,7 +102,18 @@ flowchart TB
     ADMIN --> DC
     ADMIN --> SVR
     ADMIN --> WIN
+```
 
+
+How to read it
+
+DC01 centrally manages identity and policy.
+
+GPO baseline represents centralized enforcement (password policies, firewall policies, audit policy, etc.).
+
+Defender + Firewall represent endpoint and host protections.
+
+Admin scripts represent assessment, enforcement, and verification activities.
 
 Domain join is configured for SVR01 and WIN11-01.
 
