@@ -41,13 +41,17 @@ using PowerShell and Group Policy concepts, and post-remediation verification wi
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
 .\hardening\powershell\audit.ps1
+```
+
 ### 2) Apply Hardening
+```powershell
 .\hardening\powershell\harden.ps1
 Restart-Computer
-
+```
 ### 3) Verify (Post-Remediation)
+```powershell
     .\hardening\powershell\verify.ps1
-
+```
 ###  Evidence
 
 Audit reports saved under: findings/reports/
