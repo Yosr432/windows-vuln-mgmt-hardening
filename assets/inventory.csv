@@ -1,0 +1,4 @@
+AssetId,Hostname,Role,OS,Criticality,Exposure
+1,DC01,Domain Controller,Windows Server 2022,5,Internal
+2,SVR01,Member Server,Windows Server 2022,4,Internal
+3,WIN11-01,Endpoint,Windows 11,3,Internal
