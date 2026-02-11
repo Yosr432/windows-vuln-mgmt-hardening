@@ -26,7 +26,7 @@ Represents technical impact and exploitability.
 Represents business/system importance.
 
 1 – Low-value endpoint  
-3 – Important internal server  
+3 – Important internal server ,reachable by many hosts / lateral movement
 5 – Domain Controller / Core Infrastructure  
 
 ---
