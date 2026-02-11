@@ -28,7 +28,7 @@ flowchart LR
   SVR01 -->|PowerShell Audit/Hardening| WIN11
   SVR01 -->|PowerShell Audit/Hardening| SVR01
   DC01 -->|PowerShell Audit/Hardening| DC01
-
+```
 
 3. Components and Roles
 3.1 DC01 — Domain Controller (Tier 0)
