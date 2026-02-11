@@ -157,7 +157,7 @@ Some controls are best enforced via GPO in enterprise; the lab may apply them vi
 
 7. Mapping to Repository Artifacts
    
-
+```md
    | Item              | Description                             | Location                                |
 | ----------------- | --------------------------------------- | --------------------------------------- |
 | Asset inventory   | Hosts, roles, criticality, exposure     | `assets/inventory.csv`                  |
@@ -173,5 +173,6 @@ Some controls are best enforced via GPO in enterprise; the lab may apply them vi
 | Evidence          | Screenshots, exports                    | `screenshots/` and `findings/reports/`  |
 
 
+```
 
 
