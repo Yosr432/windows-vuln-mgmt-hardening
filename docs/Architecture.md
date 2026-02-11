@@ -15,19 +15,38 @@ The architecture is intentionally small but mirrors real operational patterns:
 ## 2. Logical Topology
 
 ```mermaid
-flowchart LR
-  subgraph Domain["Windows Domain lab"]
-    DC01["DC01\n Windows Server 2022\n AD DS + DNS + GPO"]
-    SVR01["SVR01\n Windows Server 2022\n Member Server"]
-    WIN11["WIN11-01\nWindows 11 Endpoint\n Defender Sysmon optional"]
-  end
+flowchart TB
 
-  DC01 -->|GPO Policies| SVR01
-  DC01 -->|GPO Policies| WIN11
+    subgraph Infrastructure
+        DC["DC01\nActive Directory\nDNS + GPO"]
+        SVR["SVR01\nMember Server"]
+        WIN["WIN11-01\nUser Endpoint"]
+    end
 
-  SVR01 -->|PowerShell Audit/Hardening| WIN11
-  SVR01 -->|PowerShell Audit/Hardening| SVR01
-  DC01 -->|PowerShell Audit/Hardening| DC01
+    subgraph Security_Controls
+        DEF["Microsoft Defender"]
+        FW["Windows Firewall"]
+        GPO["Security Baseline via GPO"]
+    end
+
+    subgraph Administration
+        ADMIN["Security Administrator\n(PowerShell Scripts)"]
+    end
+
+    DC --> SVR
+    DC --> WIN
+
+    GPO --> SVR
+    GPO --> WIN
+
+    DEF --> WIN
+    FW --> SVR
+    FW --> WIN
+
+    ADMIN --> DC
+    ADMIN --> SVR
+    ADMIN --> WIN
+
 ```
 
 3. Components and Roles
