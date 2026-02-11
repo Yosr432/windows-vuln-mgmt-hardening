@@ -1,19 +1,75 @@
-# Architecture (Windows Vulnerability Management & Hardening Lab)
+# Architecture (Enterprise Windows Vulnerability Management & Hardening Lab)
 
 ## 1. Purpose
-This lab simulates an enterprise Windows environment to practice a full vulnerability management lifecycle:
-baseline assessment, risk-based prioritization, remediation planning, hardening implementation, and verification.
+This lab simulates a realistic Windows enterprise environment to practice:
+- Vulnerability and configuration assessments
+- Risk-based prioritization
+- Remediation planning
+- System hardening (PowerShell + GPO-aligned baseline)
+- Post-remediation verification with evidence
 
-The architecture is intentionally small but mirrors real operational patterns:
-- Centralized policy enforcement (GPO)
-- Standardized security baselines (PowerShell/GPO)
-- Evidence-driven auditing (before/after reports)
-- Clear asset roles and criticality
+The architecture is intentionally small but mirrors how security teams manage Windows environments at scale.
 
 ---
 
-## 2. Logical Topology
+## 2. Scope (Windows-only)
+**In-scope systems**
+- Windows Server (Domain Controller)
+- Windows Server (Member Server)
+- Windows 10/11 Endpoint (Domain-joined)
 
+**In-scope controls**
+- Group Policy security baselines (documented / optionally enforced)
+- Windows Firewall configuration
+- Microsoft Defender baseline
+- Protocol hardening (e.g., SMBv1 removal)
+- Remote access hardening (RDP NLA when applicable)
+
+---
+
+## 3. Components & Roles
+
+### 3.1 DC01 — Domain Controller (Tier 0)
+**Role:** Identity and policy control plane.  
+**Key services:**
+- Active Directory Domain Services (AD DS)
+- DNS
+- Group Policy Objects (GPO)
+
+**Why it matters:** The DC is the highest-value Windows asset in most environments, so it is treated as **highest criticality**.
+
+---
+
+### 3.2 SVR01 — Member Server (Tier 1)
+**Role:** Represents a typical Windows server workload (app/file/web optional).  
+**Why it matters:** Common lateral movement target; must follow secure baselines (protocols, firewall, access control).
+
+---
+
+### 3.3 WIN11-01 — Endpoint (Tier 2)
+**Role:** Represents a user workstation.  
+**Key controls:**
+- Microsoft Defender Antivirus
+- Windows Firewall
+- Optional: Sysmon for additional telemetry
+
+**Why it matters:** Endpoints are frequent initial access points and must be hardened consistently.
+
+---
+
+### 3.4 Administrative Role (Security Admin)
+**Role:** Executes the security lifecycle using scripted automation:
+- `audit.ps1` (baseline posture)
+- `harden.ps1` (apply controls)
+- `verify.ps1` (post-remediation validation)
+
+This reflects real security engineering practice: standardization, repeatability, and evidence collection.
+
+---
+
+## 4. Logical Topology
+
+### 4.1 Infrastructure + Controls (Clear View)
 ```mermaid
 flowchart TB
 
@@ -47,87 +103,6 @@ flowchart TB
     ADMIN --> SVR
     ADMIN --> WIN
 
-```
-
-3. Components and Roles
-3.1 DC01 — Domain Controller (Tier 0)
-
-Role: Core identity and policy control plane.
-Services:
-
-Active Directory Domain Services (AD DS)
-
-DNS
-
-Group Policy Management (GPO)
-
-Security relevance:
-
-Highest criticality asset (Criticality = 5)
-
-Primary target in enterprise environments
-
-Hardening focuses on authentication policies, privileged access, and baseline security configuration
-
-3.2 SVR01 — Member Server (Tier 1)
-
-Role: Typical server workload host (file/app/web optional).
-Services (optional):
-
-IIS (for realism)
-
-File services
-
-Security relevance:
-
-High-value lateral movement target
-
-Hardening focuses on removing legacy services (e.g., SMBv1), enforcing firewall profiles, and restricting remote access paths
-
-3.3 WIN11-01 — Endpoint (Tier 2)
-
-Role: User workstation simulation.
-Security controls:
-
-Microsoft Defender Antivirus
-
-Windows Firewall
-
-Optional telemetry:
-
-Sysmon for enhanced event visibility
-
-Security relevance:
-
-Common initial access vector in enterprise incidents
-
-Hardening focuses on endpoint protection baseline and reducing local admin exposure
-
-4. Data Flow and Control Flow
-4.1 Control Flow (Enforcement)
-
-GPO (DC01) applies security baselines across domain-joined machines (SVR01, WIN11-01).
-
-PowerShell scripts apply and validate hardening controls, enabling repeatable execution and consistency.
-
-4.2 Evidence Flow (Auditing)
-
-audit.ps1 collects baseline evidence and exports JSON reports.
-
-verify.ps1 collects post-remediation evidence and enables before/after comparison.
-
-Findings are documented in markdown with supporting evidence stored in findings/reports/ and screenshots/.
-
-5. Security Boundaries and Assumptions
-5.1 Boundaries
-
-All hosts are part of a lab domain environment.
-
-Administrative actions (scripts) are executed with local/admin privileges where required.
-
-The architecture assumes an internal network (non-internet-facing) unless exposure is explicitly configured.
-
-5.2 Assumptions
 
 Domain join is configured for SVR01 and WIN11-01.
 
